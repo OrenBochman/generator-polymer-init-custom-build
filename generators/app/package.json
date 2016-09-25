@@ -1,7 +1,7 @@
 {
   "name": "polymer-starter-kit-custom-build",
   "version": "0.0.0",
-  "description": "A starting point for Polymer 1.0 custom build apps",
+  "description": "The psk2 plus apps generator",
   "repository": {
     "type": "git",
     "url": "git@github.com:PolymerElements/generator-polymer-init-custom-build"

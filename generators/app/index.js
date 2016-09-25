@@ -9,11 +9,38 @@
  */
 
 'use strict';
-
-const path = require('path');
 const yeoman = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
+const path = require('path');
 
 module.exports = yeoman.Base.extend({
+  prompting: function () {
+    // Have Yeoman greet the user.
+    this.log(yosay(
+      'Welcome to the mind-blowing ' + chalk.red('generator-polymer-init-custom-build') + ' generator!'
+    ));
+
+    var prompts = [{
+      type: 'input',
+      name: 'elementName',
+      message: 'Would you like your element to be called?',
+      default: 'my-element'
+    },
+    {
+      type: 'confirm',
+      name: 'firebaseInstall',
+      message: 'Would you like to enable firebase?',
+      default: false
+    }
+  ];
+
+    return this.prompt(prompts).then(function (props) {
+      // To access props later use this.props.someAnswer;
+      this.props = props;
+    }.bind(this));
+  },
+
   writing: function () {
     this.sourceRoot(path.join(path.dirname(this.resolved), 'polymer-starter-kit'));
     this.fs.copy([
@@ -26,9 +53,38 @@ module.exports = yeoman.Base.extend({
       this.templatePath('gulp-tasks/**/*'),
       this.templatePath('{gulpfile.js,package.json}')
     ], this.destinationPath());
-  },
 
+  },
+  installingFirebaseCLI: function() {
+    const firebaseInstall = this.props.firebaseInstall;
+    if(firebaseInstall)
+        this.npmInstall(['firebase-tools'], { 'saveDev': true });
+  },
+  initFirebase: function() {
+    const firebaseInstall = this.props.firebaseInstall;
+    if(firebaseInstall){
+
+      var client = require('firebase-tools');
+      client.list().then(function(data) {
+        console.log(data);
+      }).catch(function(err) {
+        // handle error
+      });
+
+      client.init({
+        project: 'myfirebase',
+        token: process.env.FIREBASE_TOKEN        
+      }).then(function() {
+        console.log('Rules have been deployed!')
+      }).catch(function(err) {
+        // handle error
+      });
+
+    }
+  },
   install: function () {
     this.installDependencies();
-  }
+  },
+
+
 });

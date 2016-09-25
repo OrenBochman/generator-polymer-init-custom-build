@@ -1,9 +1,18 @@
 {
-  "name": "generator-polymer-init-custom-build",
+  "name": "generator-polymer-init-custom-build-plus",
   "version": "1.0.0",
   "description": "A starting point for building apps using polymer-build",
+  "keywords": [
+   "yeoman-generator",
+   "scaffold",
+   "framework",
+   "polymer"
+ ],
   "files": [
-    "generators"
+    "generators/app",
+    "generators/behavior",
+    "generators/element" ,
+    "generators/stylemodule"
   ],
   "main": "generators/app/index.js",
   "keywords": [

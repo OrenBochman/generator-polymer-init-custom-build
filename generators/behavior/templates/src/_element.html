@@ -1,0 +1,33 @@
+<script>
+    //import this behviour using an html import: <link rel="import" href="<%= elementName %>.html">
+    //and a     behaviors: [<%= elementName %>]
+
+    <%= elementName %> = {
+
+      properties: {
+        isProp: {
+          type: Boolean,
+          value: false,
+          notify: true,
+          observer: '_propChanged'
+        }
+      },
+
+      listeners: {
+        click: '_toggleProp'
+      },
+
+      created: function() {
+        console.log('Prop for ', this, 'enabled!');
+      },
+
+      _toggleProp: function() {
+        this.isProp = !this.isProp;
+      },
+
+      _propChanged: function(value) {
+        this.toggleClass('prop', value);
+      }
+
+    };
+</script>
